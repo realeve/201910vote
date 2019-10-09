@@ -7,9 +7,11 @@ import FormComponent from '@/components/FormComponent';
 import router from 'umi/router';
 import * as db from '@/utils/db';
 import * as lib from '@/utils/lib';
+import * as userLib from '@/utils/user';
+import * as R from 'ramda';
 
 function NewPage({ paper: initData, logInfo, dispatch }: any) {
-  const [state, setState] = useState(initData.map(item => ''));
+  const [state, setState] = useState(paperData.map(item => ''));
 
   const [loading, setLoading] = useState(false);
   const [showErr, setShowErr] = useState(initData.length === 0 ? {} : { msg: '' });
@@ -40,14 +42,16 @@ function NewPage({ paper: initData, logInfo, dispatch }: any) {
 
     param.uid = logInfo.uid;
     param.rec_time = lib.now();
-    console.log(param);
 
     Toast.success('模拟数据提交');
 
-    // db.addCbpcVote201910()
-
-    console.log(state);
-    return;
+    db.addCbpcVote201910(param)
+      .then(res => {
+        userLib.gotoSuccess();
+      })
+      .catch(e => {
+        Toast.fail('提交失败,请勿重复作答');
+      });
   };
 
   return (

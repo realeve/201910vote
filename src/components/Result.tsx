@@ -30,7 +30,7 @@ export default function ResultComponent({ title = '提交成功', status = 'succ
         title={title}
         message="感谢您的参与！"
       />
-      <WingBlank>
+      {/* <WingBlank>
         <Button
           style={{ marginTop: 20 }}
           onClick={() => {
@@ -38,7 +38,7 @@ export default function ResultComponent({ title = '提交成功', status = 'succ
           }}
           type="primary"
         >
-          查看投票得分
+          查看投票结果
         </Button>
         <Button
           style={{ marginTop: 20 }}
@@ -48,7 +48,7 @@ export default function ResultComponent({ title = '提交成功', status = 'succ
         >
           返回
         </Button>
-      </WingBlank>
+      </WingBlank> */}
     </>
   );
 }
