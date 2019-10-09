@@ -12,7 +12,7 @@ export interface IPropsForm {
   onChange: any;
   state: any;
   showErr?: any;
-  showKey: boolean;
+  showKey?: boolean;
   [key: string]: any;
 }
 export default function FormComponent({
@@ -87,7 +87,7 @@ export default function FormComponent({
                     ? '无'
                     : val;
                 nextState[key] = res.trim();
-                onChange(nextState);
+                prop.onChange(nextState);
               }}
               rows={3}
               placeholder="请在此输入"

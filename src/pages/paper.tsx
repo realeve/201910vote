@@ -4,16 +4,12 @@ import styles from './paper.less';
 import { paperData } from '@/utils/questions';
 import { connect } from 'dva';
 import FormComponent from '@/components/FormComponent';
-import * as R from 'ramda';
 import router from 'umi/router';
-
-import RadioComponent from '@/components/RadioComponent';
-import * as userLib from '@/utils/user';
 import * as db from '@/utils/db';
 import * as lib from '@/utils/lib';
 
-function NewPage({ paper: initData, user, dispatch }: any) {
-  const [state, setState]: [TAnswerList, any] = useState([]);
+function NewPage({ paper: initData, logInfo, dispatch }: any) {
+  const [state, setState] = useState(initData.map(item => ''));
 
   const [loading, setLoading] = useState(false);
   const [showErr, setShowErr] = useState(initData.length === 0 ? {} : { msg: '' });
@@ -25,62 +21,39 @@ function NewPage({ paper: initData, user, dispatch }: any) {
       // 不重复提交
       return;
     }
-    // setLoading(true);
-    Toast.success('模拟数据提交');
-    return;
+    // 数据是否完整
 
-    db.addPwnFavoriteLogs(res)
-      .then(res => {
-        userLib.gotoSuccess();
-      })
-      .catch(e => {
-        let err = e.response.data['Error Message'];
-        dispatch({
-          type: 'common/setStore',
-          payload: {
-            result: {
-              title: err.includes('Duplicate')
-                ? '请勿重复提交'
-                : err.includes('课程已满')
-                ? '课程已满，请选择其它课程'
-                : '提交失败，请重试',
-              status: 'warning',
-            },
-          },
-        });
-        userLib.gotoSuccess();
-      });
+    let status = state.findIndex(item => item.trim().length === 0);
+
+    if (status > -1) {
+      Toast.fail(`第${status + 1}题未填写`);
+      return;
+    }
+
+    let param = {};
+    R.clone(state).forEach((item, idx) => {
+      param['q_' + idx] = item
+        .trim()
+        .replace(/\\r/g, '')
+        .replace(/\\n/g, '');
+    });
+
+    param.uid = logInfo.uid;
+    param.rec_time = lib.now();
+    console.log(param);
+
+    Toast.success('模拟数据提交');
+
+    // db.addCbpcVote201910()
+
+    console.log(state);
+    return;
   };
-  let course = [];
 
   return (
     <div>
       <div className={styles.content}>
         <FormComponent data={paper} onChange={setState} state={state} showErr={showErr} />
-        {course.length > 0 && (
-          <RadioComponent
-            title={`5.请选择你的社团课`}
-            data={course}
-            onChange={setState}
-            idx={4}
-            state={state}
-            showErr={showErr}
-            render={data => (
-              <div>
-                <p>课程: {data.groupname}</p>
-                <p>老师: {data.teachername}</p>
-                <p>教室: {data.classroom}</p>
-                <p>允许人数: {data.users}</p>
-                <p>
-                  已选人数:&nbsp;
-                  {chooseList.length === 0
-                    ? 0
-                    : (chooseList.find(item => item.name == data.classid) || { value: 0 }).value}
-                </p>
-              </div>
-            )}
-          />
-        )}
         <WhiteSpace size="lg" />
       </div>
       <WingBlank>

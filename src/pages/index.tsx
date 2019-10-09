@@ -56,7 +56,6 @@ function NewPage({ paper: initData, dispatch }: any) {
       }
       userLib.saveLoginfo(res.data[0]);
       updateState(res.data[0]);
-      console.log('/paper');
       router.push('/paper');
     });
   };
@@ -70,6 +69,7 @@ function NewPage({ paper: initData, dispatch }: any) {
           <p>
             2、调研采用不记名方式，您的回答对我们改善组织的管理水平和领导质量有很大的帮助，请真实地表达您的意见和想法。感谢您的参与～
           </p>
+          <p>（活动时间：2019年10月10日至12日）</p>
         </WingBlank>
         <div style={{ paddingLeft: 20, marginTop: 30 }}>登录</div>
 
