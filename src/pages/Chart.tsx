@@ -50,7 +50,7 @@ export default function ChartPage() {
         >
           综述
         </Button>
-        <Button
+        {/* <Button
           className={styles.act}
           size="small"
           onClick={() => {
@@ -61,7 +61,7 @@ export default function ChartPage() {
           type={title === '中高层管理人员' ? 'primary' : 'ghost'}
         >
           中高层管理人员
-        </Button>
+        </Button> */}
       </WingBlank>
       <div
         className={styles.content}

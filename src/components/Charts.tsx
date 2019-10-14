@@ -33,12 +33,12 @@ let color = [
 ];
 
 const getPie = (data, text) => ({
-  // title: {
-  //   left: 'center',
-  //   text: R.splitEvery(20, text).join('\r\n'),
-  //   y: 10,
-  // },
-  // toolbox: { feature: { saveAsImage: { type: 'png' } } },
+  title: {
+    left: 'center',
+    text: R.splitEvery(20, text).join('\r\n'),
+    y: 10,
+  },
+  toolbox: { feature: { saveAsImage: { type: 'png' } } },
   tooltip: {
     trigger: 'item',
     formatter: '{a} <br/>{b}: {c} ({d}%)',
@@ -69,12 +69,12 @@ const getPie = (data, text) => ({
 });
 
 const getBar = (data, text) => ({
-  // title: {
-  //   left: 'center',
-  //   text: R.splitEvery(20, text).join('\r\n'),
-  //   y: 10,
-  // },
-  toolbox: { feature: { saveAsImage: { type: 'svg' } } },
+  title: {
+    left: 'center',
+    text: R.splitEvery(20, text).join('\r\n'),
+    y: 10,
+  },
+  toolbox: { feature: { saveAsImage: { type: 'png' } } },
   tooltip: {
     trigger: 'item',
   },
@@ -108,7 +108,7 @@ const getBar = (data, text) => ({
   ],
 });
 
-export default function RCharts({ data: prevData, renderer = 'svg', title, type, ...props }) {
+export default function RCharts({ data: prevData, renderer = 'canvas', title, type, ...props }) {
   let echarts_react = useRef();
   let [option, setOption] = useState({});
   useEffect(() => {
