@@ -1,4 +1,6 @@
-import { axios } from './axios';
+import { axios, DEV, _commonData, mock } from './axios';
+import * as user from './user';
+import { sport as setting } from './setting';
 
 /**
 *   @database: { 微信开发 }
@@ -21,3 +23,24 @@ export const addCbpcVote201910 = params =>
     url: '/212/40cbfdf2a7.json',
     params,
   });
+
+/**
+ *   @database: { 微信开发 }
+ *   @desc:     { 问卷列表 }
+ */
+export const getCbpcHarmoney2019 = (company_id = setting.company_id) =>
+  axios({
+    url: '/169/77b0183631/0.json',
+    params: {
+      company_id,
+    },
+  });
+
+/**
+ *   @database: { 微信开发 }
+ *   @desc:     { 团委员工归属感调查问卷结果 }
+ */
+export const getCbpcVote201910 = () =>
+  axios({
+    url: '/215/7da79abfc5.json',
+  }).then(res => res.data.map(item => Object.values(item)));
